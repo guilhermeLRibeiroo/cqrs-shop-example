@@ -1,24 +1,26 @@
 ﻿using Domain.Commands.Requests;
 using Domain.Commands.Responses;
-using Domain.Handlers.Base;
-using System.Xml.Linq;
+using MediatR;
 
 namespace Domain.Handlers
 {
     public class CreateCustomerHandler
-        : IBaseHandler<CreateCustomerRequest, CreateCustomerResponse>
+        : IRequestHandler<CreateCustomerRequest, CreateCustomerResponse>
     {
-        public async Task<CreateCustomerResponse> Handle(CreateCustomerRequest request)
+        public Task<CreateCustomerResponse> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)
         {
             // Do business logic
             // ...
-            return new CreateCustomerResponse
+
+            var result = new CreateCustomerResponse
             {
                 Id = Guid.NewGuid(),
                 Name = "testing",
                 Email = "testing@testing.test",
                 Date = DateTime.Now,
             };
+
+            return Task.FromResult(result);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Domain.Commands.Requests;
 using Domain.Commands.Responses;
-using Domain.Handlers.Base;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -10,12 +10,12 @@ namespace WebAPI.Controllers
     public class CustomerController : ControllerBase
     {
         [HttpPost]
-        public async Task<CreateCustomerResponse> Create(
-            [FromServices] IHandlerProcessor handler,
+        public Task<CreateCustomerResponse> Create(
+            [FromServices] IMediator mediator,
             [FromBody] CreateCustomerRequest command
             )
         {
-            return await handler.Process<CreateCustomerRequest, CreateCustomerResponse>(command);
+            return mediator.Send(command);
         }
     }
 }
